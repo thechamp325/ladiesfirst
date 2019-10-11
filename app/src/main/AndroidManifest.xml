@@ -34,18 +34,13 @@
             android:name=".PopupWindow"
             android:theme="@style/AppTheme.CustomTheme" />
 
-        <activity
-            android:name=".MapsActivity"
-            android:label="">map activity"
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
 
         <activity
             android:name=".firstscreen"
+            android:theme="@style/AppTheme.noAction" />
+        <activity
+            android:name=".EmergencyContacts"
             android:theme="@style/AppTheme.noAction" />
 
         <activity android:name=".Login">
@@ -58,8 +53,7 @@
             <!-- </intent-filter> -->
         </activity>
         <activity android:name=".MainActivity" />
-        <activity android:name=".HeatmapsDemoActivity" />
-        <activity android:name=".HeatmapsPlacesDemoActivity" />
+
 
     </application>
 

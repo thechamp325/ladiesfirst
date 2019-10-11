@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">ladiesfirst</string>
+    <string name="user_name">ladiesfirst</string>
+
     <string name="newactlink"><u>No account?Create one</u>.</string>
     <string name="navigation_drawer_open">Open Navigation drawer</string>
     <string name="navigation_drawer_close">Close Navigation drawer</string>
@@ -19,4 +21,6 @@
     <string name="button_radius">Radius</string>
     <string name="button_gradient">Gradient</string>
     <string name="button_opacity">Opacity</string>
+    <string name="action_settings">Settings</string>
+
 </resources>

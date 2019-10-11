@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -13,6 +14,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -20,8 +23,14 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
+    FirebaseFirestore db ;
     private ProgressDialog pd;
     protected String USERID=null;
     private EditText userEmail,password,confirmpassword,phoneno,Username;
@@ -46,6 +55,8 @@ public class MainActivity extends AppCompatActivity {
         signin=(Button)findViewById(R.id.SignIn);
 
        firebaseauth=FirebaseAuth.getInstance();
+        db = FirebaseFirestore.getInstance();
+
 
         signin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -60,6 +71,8 @@ public class MainActivity extends AppCompatActivity {
 
                 firedatabase=FirebaseDatabase.getInstance();
                 databaseref=firedatabase.getReference("Users");
+                db = FirebaseFirestore.getInstance();
+
 
                 if(TextUtils.isEmpty(email)){
                     Toast.makeText(MainActivity.this,"Please Enter Email",Toast.LENGTH_SHORT).show();
@@ -99,6 +112,8 @@ public class MainActivity extends AppCompatActivity {
                                     if (task.isSuccessful()) {
                                         pd.cancel();
                                         FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+                                        db = FirebaseFirestore.getInstance();
+
                                         String uid = firebaseUser.getUid();
                                         //String id=databaseref.push().getKey();
                                         UserDetails U=new UserDetails(
@@ -114,6 +129,25 @@ public class MainActivity extends AppCompatActivity {
                                             }
                                         });
                                         USERID=uid;
+                                        Map<String,Object>data=new HashMap<>();
+                                        data.put("name",user);
+                                        data.put("email",email);
+                                        data.put("phone",phoneNumber);
+                                        db.collection("Users").document(USERID).set(data)
+                                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                    @Override
+                                                    public void onSuccess(Void aVoid) {
+                                                        Toast.makeText(MainActivity.this, "Success", Toast.LENGTH_SHORT).show();
+                                                    }
+                                                })
+                                                .addOnFailureListener(new OnFailureListener() {
+                                                    @Override
+                                                    public void onFailure(@NonNull Exception e) {
+                                                        Toast.makeText(MainActivity.this, "Failure", Toast.LENGTH_SHORT).show();
+                                                        Log.d("Error","Error");
+
+                                                    }
+                                                });
 
 
                                         Intent intent=new Intent(MainActivity.this,Login.class);
@@ -128,9 +162,21 @@ public class MainActivity extends AppCompatActivity {
 
                                 }
                             });
+
+
+
                 }
 
+
             }
+
+
+
+
+
+
+
+
         });
 
    }

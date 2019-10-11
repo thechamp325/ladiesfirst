@@ -20,7 +20,6 @@ import com.google.android.material.navigation.NavigationView;
 public class firstscreen extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private DrawerLayout drawer;
 
-    Button alarm;     //button which produces sound on click
     Button send;
     SmsManager smsManager;
     private static final String TAG = "Home";
@@ -28,7 +27,6 @@ public class firstscreen extends AppCompatActivity implements NavigationView.OnN
     protected void onCreate(Bundle savedInstanceState){
     super.onCreate(savedInstanceState);
     setContentView(R.layout.firstscreen);
-    alarm = findViewById(R.id.sound);
 
 
 
@@ -60,15 +58,15 @@ public class firstscreen extends AppCompatActivity implements NavigationView.OnN
             case R.id.profile:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new Profile() ).commit();
                 break;
-            case R.id.map:
-                Intent intent = new Intent(this, MapsActivity.class);
-                this.startActivity(intent);
-//                Intent t = new Intent(this, MapsActivity.class);
-//                startActivity(t);
-//                finish();
+//            case R.id.map:
+////                Intent intent = new Intent(this, MapsActivity.class);
+////                this.startActivity(intent);
+////                Intent t = new Intent(this, MapsActivity.class);
+////                startActivity(t);
+////                finish();
 //                Log.d(TAG, "onNavigationItemSelected: ");
 //                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new MapsActivity() ).commit();
-               break;
+//               break;
         }
         drawer.closeDrawer(GravityCompat.START);
         return true;

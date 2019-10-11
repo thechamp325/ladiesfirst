@@ -17,22 +17,56 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+
 public class HomeScreen  extends Fragment {
+    FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+    String uid = firebaseUser.getUid();
+
+    FirebaseFirestore db=FirebaseFirestore.getInstance();
+    private DocumentReference noteRef = db.document("Users/"+uid);
+    private CollectionReference notebookRef = noteRef.collection("contact1");
     Button alarm;     //button which produces sound on click
-    Button send;
     SmsManager smsManager;
     private static final String TAG = "Home";
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.home_page, container, false);
         alarm = v.findViewById(R.id.sound);
-//        send = v.findViewById(R.id.sendSMS);
-//         final MediaPlayer mp = MediaPlayer.create(this.getActivity(), R.raw.action);
+         final MediaPlayer mp = MediaPlayer.create(this.getActivity(), R.raw.action);
 
         alarm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                sendsms("+919834134993");
+//                sendsms("+917767832966");
+                notebookRef.get()
+                        .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                            @Override
+                            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                                String data = "";
+
+                                for (QueryDocumentSnapshot documentSnapshot : queryDocumentSnapshots) {
+                                    Note note = documentSnapshot.toObject(Note.class);
+                                    note.setDocumentId(documentSnapshot.getId());
+
+                                    String documentId = note.getDocumentId();
+                                    String name = note.getname();
+                                    String phone = note.getphone();
+                                    sendsms(phone);
+
+                                    data += "ID: " + documentId
+                                            + "\nName: " + name + "\nPhone: " + phone + "\n\n";
+                                }
+
+                            }
+                        });
 
 
             }
@@ -67,6 +101,29 @@ public class HomeScreen  extends Fragment {
         smsManager.sendTextMessage(phone,null,"Please save me!!!",null
                 ,null );
 
+    }
+    public void alarm(View v) {
+        notebookRef.get()
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                        String data = "";
+
+                        for (QueryDocumentSnapshot documentSnapshot : queryDocumentSnapshots) {
+                            Note note = documentSnapshot.toObject(Note.class);
+                            note.setDocumentId(documentSnapshot.getId());
+
+                            String documentId = note.getDocumentId();
+                            String name = note.getname();
+                            String phone = note.getphone();
+                            sendsms(phone);
+
+                            data += "ID: " + documentId
+                                    + "\nName: " + name + "\nPhone: " + phone + "\n\n";
+                        }
+
+                    }
+                });
     }
 
 

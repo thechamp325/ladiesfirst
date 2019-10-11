@@ -52,6 +52,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "561952573830-masl2v3d6annuctj8k1e8se1p9dtdkvc.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.ladiesfirst",
+            "certificate_hash": "2394243e1e1f0aa978e05dc6a4c3f9ebee1201d1"
+          }
+        },
+        {
           "client_id": "561952573830-mdglbsg9nb6p9l5pb1p2r5phfftt9e1g.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
