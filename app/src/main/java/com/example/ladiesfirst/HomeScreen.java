@@ -26,17 +26,37 @@ public class HomeScreen  extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.home_page, container, false);
         alarm = v.findViewById(R.id.sound);
-        send = v.findViewById(R.id.sendSMS);
+//        send = v.findViewById(R.id.sendSMS);
 //         final MediaPlayer mp = MediaPlayer.create(this.getActivity(), R.raw.action);
 
         alarm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                sendsms("+919834134993");
 
 
             }
         });
 
+//        smsManager=SmsManager.getDefault();
+//
+//        if(ContextCompat.checkSelfPermission(this.getContext(), Manifest.permission.SEND_SMS)!= PackageManager.PERMISSION_GRANTED)
+//        {
+//            ActivityCompat.requestPermissions(this.getActivity(),new String[]{Manifest.permission.SEND_SMS},2);
+//            Toast.makeText(this.getActivity(), "permission not granted", Toast.LENGTH_SHORT).show();
+//        }
+//
+//        send.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                smsManager.sendTextMessage("+917767832966",null,"hello",null
+//                        ,null );
+//
+//            }
+//        });
+        return v;
+    }
+    protected void sendsms(String phone){
         smsManager=SmsManager.getDefault();
 
         if(ContextCompat.checkSelfPermission(this.getContext(), Manifest.permission.SEND_SMS)!= PackageManager.PERMISSION_GRANTED)
@@ -44,16 +64,9 @@ public class HomeScreen  extends Fragment {
             ActivityCompat.requestPermissions(this.getActivity(),new String[]{Manifest.permission.SEND_SMS},2);
             Toast.makeText(this.getActivity(), "permission not granted", Toast.LENGTH_SHORT).show();
         }
+        smsManager.sendTextMessage(phone,null,"Please save me!!!",null
+                ,null );
 
-        send.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                smsManager.sendTextMessage("+917767832966",null,"hello",null
-                        ,null );
-
-            }
-        });
-        return v;
     }
 
 

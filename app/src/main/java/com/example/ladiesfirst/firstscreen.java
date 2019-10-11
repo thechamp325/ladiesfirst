@@ -1,7 +1,9 @@
 package com.example.ladiesfirst;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.telephony.SmsManager;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.Button;
 
@@ -27,13 +29,12 @@ public class firstscreen extends AppCompatActivity implements NavigationView.OnN
     super.onCreate(savedInstanceState);
     setContentView(R.layout.firstscreen);
     alarm = findViewById(R.id.sound);
-    send = findViewById(R.id.sendSMS);
 
 
 
     NavigationView navigationView;
     navigationView = findViewById(R.id.nav_view);
-
+    navigationView.setNavigationItemSelectedListener(this);
     Toolbar toolbar = findViewById(R.id.toolbar);
     setSupportActionBar(toolbar);
     drawer = findViewById(R.id.drawer_layout);
@@ -54,8 +55,20 @@ public class firstscreen extends AppCompatActivity implements NavigationView.OnN
 }
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem){
-        switch(menuItem.getGroupId()){
+        switch(menuItem.getItemId()){
 
+            case R.id.profile:
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new Profile() ).commit();
+                break;
+            case R.id.map:
+                Intent intent = new Intent(this, MapsActivity.class);
+                this.startActivity(intent);
+//                Intent t = new Intent(this, MapsActivity.class);
+//                startActivity(t);
+//                finish();
+//                Log.d(TAG, "onNavigationItemSelected: ");
+//                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new MapsActivity() ).commit();
+               break;
         }
         drawer.closeDrawer(GravityCompat.START);
         return true;

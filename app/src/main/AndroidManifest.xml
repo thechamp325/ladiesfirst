@@ -11,7 +11,9 @@
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.SEND_SMS" />
-
+    <permission
+        android:name="com.google.maps.android.utils.permission.MAPS_RECEIVE"
+        android:protectionLevel="signature" />
 
     <application
         android:name=".ladiesfirst"
@@ -33,6 +35,16 @@
             android:theme="@style/AppTheme.CustomTheme" />
 
         <activity
+            android:name=".MapsActivity"
+            android:label="">map activity"
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity
             android:name=".firstscreen"
             android:theme="@style/AppTheme.noAction" />
 
@@ -46,6 +58,8 @@
             <!-- </intent-filter> -->
         </activity>
         <activity android:name=".MainActivity" />
+        <activity android:name=".HeatmapsDemoActivity" />
+        <activity android:name=".HeatmapsPlacesDemoActivity" />
 
     </application>
 
