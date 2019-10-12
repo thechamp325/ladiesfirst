@@ -1,15 +1,24 @@
 package com.example.ladiesfirst;
 
 import android.Manifest;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.telephony.SmsManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CompoundButton;
+import android.widget.Switch;
 import android.widget.Toast;
+import android.widget.ToggleButton;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -29,6 +38,10 @@ import com.google.firebase.firestore.QuerySnapshot;
 public class HomeScreen  extends Fragment {
     FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
     String uid = firebaseUser.getUid();
+    private static final int SLEEP_TIME = 10000;
+    private boolean IS_VIBRATE = true;
+    Thread t=null;
+
 
     FirebaseFirestore db=FirebaseFirestore.getInstance();
     private DocumentReference noteRef = db.document("Users/"+uid);
@@ -41,6 +54,35 @@ public class HomeScreen  extends Fragment {
         View v = inflater.inflate(R.layout.home_page, container, false);
         alarm = v.findViewById(R.id.sound);
          final MediaPlayer mp = MediaPlayer.create(this.getActivity(), R.raw.action);
+
+        Switch toggle = (Switch) v.findViewById(R.id.toggle);
+        toggle.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+
+                    long start = System.currentTimeMillis();
+                    long runtime =100000;
+
+                    if(System.currentTimeMillis()-start-runtime<0) {
+                        Vibrator v = (Vibrator) getActivity().getSystemService(Context.VIBRATOR_SERVICE);
+
+
+// Vibrate for 400 milliseconds
+                        v.vibrate(500);
+
+                    }
+
+
+                    Toast.makeText(getActivity(),"isChecked", Toast.LENGTH_SHORT).show();
+
+
+                } else {
+
+                    Toast.makeText(getActivity(), "UNCHECKED", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
 
         alarm.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -126,5 +168,8 @@ public class HomeScreen  extends Fragment {
                 });
     }
 
+    }
 
-}
+
+
+

@@ -58,15 +58,15 @@ public class firstscreen extends AppCompatActivity implements NavigationView.OnN
             case R.id.profile:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new Profile() ).commit();
                 break;
-//            case R.id.map:
-////                Intent intent = new Intent(this, MapsActivity.class);
-////                this.startActivity(intent);
+           case R.id.map:
+                Intent intent = new Intent(this, MapsActivity.class);
+                startActivity(intent);
 ////                Intent t = new Intent(this, MapsActivity.class);
 ////                startActivity(t);
 ////                finish();
 //                Log.d(TAG, "onNavigationItemSelected: ");
 //                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new MapsActivity() ).commit();
-//               break;
+               break;
         }
         drawer.closeDrawer(GravityCompat.START);
         return true;

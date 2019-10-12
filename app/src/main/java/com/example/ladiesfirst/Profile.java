@@ -32,6 +32,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
@@ -52,6 +53,8 @@ import com.google.firebase.firestore.QuerySnapshot;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -60,6 +63,9 @@ import org.w3c.dom.Text;
 
 public class Profile extends Fragment {
 TextView tvNumber1;
+DrawerLayout drawer=null;
+    TextView tvNumber2;
+
     TextView name;
     Button add_contacts;
      LinearLayout mLinearLayout;
@@ -71,13 +77,16 @@ TextView tvNumber1;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @androidx.annotation.Nullable ViewGroup container, @androidx.annotation.Nullable Bundle savedInstanceState){
+
+
+        //what happens on pressing three lines...is here
+
+
         View v = inflater.inflate(R.layout.activity_profile,container,false);
 
-
-        Toolbar toolbar = v.findViewById(R.id.toolbar);
-        ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
         FloatingActionButton fab = v.findViewById(R.id.fab);
         tvNumber1=(TextView)v.findViewById(R.id.tvNumber1);
+         tvNumber2=(TextView)v.findViewById(R.id.tvNumber2);
         name = (TextView)v.findViewById(R.id.name);
         db = FirebaseFirestore.getInstance();
 
@@ -91,6 +100,7 @@ TextView tvNumber1;
                     @Override
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
                         if(documentSnapshot.exists()){
+                            tvNumber2.setText(documentSnapshot.getString("email"));
                             tvNumber1.setText(documentSnapshot.getString("phone"));
                             name.setText(documentSnapshot.getString("name"));
 
@@ -142,4 +152,18 @@ TextView tvNumber1;
 
         return super.onOptionsItemSelected(item);
     }
+
+//    @Override
+//    public void onBackPressed() {
+//
+//        //if drawer is opened and we press back then navigation-bar should go back(minimize)
+//        //else go back to previous activity
+//        if(drawer.isDrawerOpen(GravityCompat.START)){
+//            drawer.closeDrawer(GravityCompat.START);
+//        }
+//        else {
+//            super.onBackPressed();
+//        }
+//    }
+
 }

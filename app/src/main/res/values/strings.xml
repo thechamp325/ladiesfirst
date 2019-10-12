@@ -7,7 +7,7 @@
     <string name="navigation_drawer_close">Close Navigation drawer</string>
     <string name="input_text">Looking for…</string>
     <string name="button_send">Go!</string>
-    <string name="police_stations">Police Stations in Victoria</string>
+    <string name="police_stations">Police Stations in Manipal</string>
     <string name="medicare">Medicare Offices</string>
     <string name="attrib_format">Data from &lt;a href = "%s">data.gov.au&lt;/a>, modified under &lt;a href = \"http://creativecommons.org/licenses/by/3.0/au/\">CC BY 3.0 AU&lt;/a></string>
     <string name="police_stations_url">http://data.gov.au/dataset/police-station-locations/resource/76110b24-0f0a-4c29-9583-3f99eaba486c</string>
